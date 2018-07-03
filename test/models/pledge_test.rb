@@ -45,4 +45,33 @@ class PledgeTest < ActiveSupport::TestCase
     )
   end
 
+  def test_a_pledge_cannot_be_created_without_a_positive_dollar_amount
+    @project = new_project
+    @pledge = @project.pledges.build
+    @pledge.dollar_amount = 1
+    #act
+    result = @pledge.greater_than_zero(@pledge.dollar_amount)
+    #assert
+    assert_equal true, result
+  end
+
+  def test_a_pledge_cannot_be_created_with_a_negative_number
+    @project = new_project
+    @pledge = @project.pledges.build
+    @pledge.dollar_amount = -1
+    #act
+    result = @pledge.greater_than_zero(@pledge.dollar_amount)
+    #assert
+    assert_equal false, result
+  end
+
+  def test_a_pledge_cannot_be_created_with_zero
+    @project = new_project
+    @pledge = @project.pledges.build
+    @pledge.dollar_amount = 0
+    #act
+    result = @pledge.greater_than_zero(@pledge.dollar_amount)
+    #assert
+    assert_equal false, result
+  end
 end
