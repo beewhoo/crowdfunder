@@ -43,17 +43,43 @@ class ProjectTest < ActiveSupport::TestCase
   def test_project_start_date_in_the_future_date_in_the_past
     @project = new_project
     @project.start_date = Date.yesterday
-    result = @project.in_the_future(@project.start_date)
+    result = @project.in_the_future
 
     assert_equal false, result
   end
 
   def test_project_start_date_in_the_future
-    @project = new_project
-    @project.start_date = Date.tomorrow
-    result = @project.in_the_future(@project.start_date)
+    project = new_project
+    project.start_date = Date.tomorrow
+    result = project.in_the_future
 
     assert_equal true, result
   end
 
+  def test_project_end_date_after_start_date
+    project = new_project
+    project.start_date = Date.yesterday
+    project.end_date = 12.days.ago
+    result = project.end_date_after_start_date
+
+    assert_equal false, result
+  end
+
+  def test_project_goal_number_is_positive
+    project = new_project
+    project.goal = 1
+
+    result = project.goal_positive_number
+
+    assert_equal true, result
+  end
+
+  def test_project_goal_number_is_zero
+    project = new_project
+    project.goal = 0
+
+    result = project.goal_positive_number
+
+    assert_equal false, result
+  end
 end
