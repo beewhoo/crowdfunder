@@ -17,4 +17,10 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
+
+  def show
+    @user = User.find(params[:id])
+    # @backed_projects = @user.projects
+    @owned_projects = @user.owned_projects
+  end
 end

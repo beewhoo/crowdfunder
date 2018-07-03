@@ -1,1 +1,5 @@
 <h1> This is your profile page</h1>
+
+<% @owned_projects.each do |project| %>
+<%= project.title %>
+<% end %>

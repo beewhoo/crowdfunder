@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   has_secure_password
+  has_many :owned_projects, class_name: "Project", foreign_key: :user_id
+  # has_many :backed_projects, through: :pledges, class_name: 
+  has_many :pledges
 
   validates :password, length: { minimum: 8 }, on: :create
   validates :password, confirmation: true, on: :create
