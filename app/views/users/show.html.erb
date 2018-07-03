@@ -1,5 +1,15 @@
 <h1> This is your profile page</h1>
 
+<p>
+  My projects
+</p>
 <% @owned_projects.each do |project| %>
+<%= project.title %>
+<% end %>
+
+<p>
+  The Projects I backed
+</p>
+<% @backed_projects.each do |project| %>
 <%= project.title %>
 <% end %>
