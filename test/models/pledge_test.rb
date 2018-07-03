@@ -74,4 +74,5 @@ class PledgeTest < ActiveSupport::TestCase
     #assert
     assert_equal false, result
   end
+
 end

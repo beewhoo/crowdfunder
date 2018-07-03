@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class ProjectTest < ActiveSupport::TestCase
 
@@ -38,6 +38,22 @@ class ProjectTest < ActiveSupport::TestCase
       password:              'passpass',
       password_confirmation: 'passpass'
     )
+  end
+
+  def test_project_start_date_in_the_future_date_in_the_past
+    @project = new_project
+    @project.start_date = Date.yesterday
+    result = @project.in_the_future(@project.start_date)
+
+    assert_equal false, result
+  end
+
+  def test_project_start_date_in_the_future
+    @project = new_project
+    @project.start_date = Date.tomorrow
+    result = @project.in_the_future(@project.start_date)
+
+    assert_equal true, result
   end
 
 end
