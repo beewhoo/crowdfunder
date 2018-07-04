@@ -11,10 +11,10 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   def test_project_is_invalid_without_owner
-    # project = create(:project, title: "cool new boardgame", description: "Trade sheep", start_date: Date.today + 1.day, end_date: Date.today + 1.month, goal: 5000)
-    # project.user = nil
-    # project.save
-    # assert project.invalid?, 'Project should not save without owner.'
+    project = build(:project, title: "cool new boardgame", description: "Trade sheep", start_date: Date.today + 1.day, end_date: Date.today + 1.month, goal: 5000)
+    project.user = nil
+    project.save
+    assert project.invalid?, 'Project should not save without owner.'
   end
 
 
