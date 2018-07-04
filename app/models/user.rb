@@ -9,4 +9,9 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, on: :create
 
   validates :email, uniqueness: true
+
+  def amount_pledged
+    pledges.sum(:dollar_amount)
+    # colon specifies which column to look at when doing the sum for the user's pledges
+  end
 end

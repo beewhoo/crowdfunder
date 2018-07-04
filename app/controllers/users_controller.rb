@@ -22,5 +22,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @owned_projects = @user.owned_projects
     @backed_projects = @user.backed_projects
+    @amount_pledged = @user.amount_pledged
   end
 end
