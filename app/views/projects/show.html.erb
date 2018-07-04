@@ -1,4 +1,4 @@
-<h1><%= @project.title %> by <%= @project %></h1>
+<h1><%= @project.title %> by <%=link_to @project.user.first_name, user_path(@project.user.id)%></h1>
 
 <% if @project.image.present? %>
   <%= image_tag @project.image %>
