@@ -23,10 +23,12 @@ class ProjectsController < ApplicationController
     @project.start_date = params[:project][:start_date]
     @project.end_date = params[:project][:end_date]
     @project.image = params[:project][:image]
+    @project.user_id = current_user.id
 
-    if @project.save
+    if @project.goal_positive_number && @project.in_the_future && @project.end_date_after_start_date &&  @project.save
       redirect_to projects_url
     else
+      flash.now[:alert] = @project.errors.full_messages.first
       render :new
     end
    end

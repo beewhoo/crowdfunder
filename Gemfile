@@ -19,6 +19,9 @@ gem 'pg'
 # Authentication and authorization
 gem 'bcrypt', '~> 3.1.7'
 
+# testing factory
+gem 'factory_bot_rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -40,4 +43,6 @@ group :test do
   gem 'simplecov', require: false
   gem 'guard', '~> 2.14.0'
   gem 'guard-minitest'
+  gem 'rspec-rails', '~> 3.0.0.beta'
+
 end

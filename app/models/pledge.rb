@@ -12,4 +12,14 @@ class Pledge < ApplicationRecord
       errors.add(:user, "Can't pledge to your own project!")
     end
   end
+
+  def greater_than_zero(num)
+    if num > 0
+      true
+    else
+      errors.add(:user, "Pledge must be a value greater than 0!")
+      false
+    end
+  end
+
 end

@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../test_helper'
 
 class RewardTest < ActiveSupport::TestCase
 
@@ -44,6 +44,20 @@ class RewardTest < ActiveSupport::TestCase
       end_date:    Date.today + 1.month,
       goal:        50000
     )
+  end
+
+  def test_reward_dollar_amount_greater_then_zero
+    project = new_project
+    project.save
+    reward = Reward.create(
+      dollar_amount: 0.00,
+      project: project
+    )
+
+    result = reward.greater_than_zero
+
+    assert_equal false, result
+
   end
 
 end

@@ -10,9 +10,10 @@ class RewardsController < ApplicationController
     @reward.dollar_amount = params[:reward][:dollar_amount]
     @reward.description = params[:reward][:description]
 
-    if @reward.save
+    if @reward.save && @reward.greater_than_zero
       redirect_to project_url(@project), notice: 'Reward created'
     else
+      errors.add(:user, "Reward dollar value must be greater than zero")
       render :new
     end
   end
