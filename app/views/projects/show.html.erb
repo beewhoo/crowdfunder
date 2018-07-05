@@ -27,3 +27,17 @@
 <% end %>
 
 <%= link_to "Add new reward", new_project_reward_path(@project) %>
+
+<h3>Total Pledged</h3>
+ <p> <%= number_to_currency(@project.pledge_sum)%></p>
+
+
+  <% if @project.user_pledged?(current_user) %>
+  <h3>Your current pledge</h3>
+  <p> <%= number_to_currency(@project.current_user_pledged_sum(current_user)) %></p>
+  <%end%>
+
+
+ <h3> Project Deadline</h3>
+ <%= icon('clock-o') %>
+ <%= "#{time_ago_in_words(@project.end_date)} #{( @project.end_date > Time.now.utc ) ? 'remaining' : 'past deadline'}" %></time>

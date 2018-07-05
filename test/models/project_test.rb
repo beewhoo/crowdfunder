@@ -1,43 +1,67 @@
-require 'test_helper'
+# require 'test_helper'
+require_relative '../test_helper'
 
 class ProjectTest < ActiveSupport::TestCase
+  include FactoryBot::Syntax::Methods
 
   def test_valid_project_can_be_created
-    owner = new_user
-    owner.save
-    project = new_project
-    project.user = owner
-    project.save
+    project = create(:project)
     assert project.valid?
     assert project.persisted?
     assert project.user
   end
 
   def test_project_is_invalid_without_owner
-    project = new_project
-    project.user = nil
+    project = build(:project, user: nil)
     project.save
     assert project.invalid?, 'Project should not save without owner.'
   end
 
-  def new_project
-    Project.new(
-      title:       'Cool new boardgame',
-      description: 'Trade sheep',
-      start_date:  Date.today + 1.day,
-      end_date:    Date.today + 1.month,
-      goal:        50000
-    )
+  def test_pledge_sum
+    project = create(:project)
+
+    create(:pledge, project: project, dollar_amount: 10)
+    create(:pledge, project: project, dollar_amount: 20)
+    create(:pledge, project: project, dollar_amount: 30)
+
+
+    assert_equal(60, project.pledge_sum)
+
   end
 
-  def new_user
-    User.new(
-      first_name:            'Sally',
-      last_name:             'Lowenthal',
-      email:                 'sally@example.com',
-      password:              'passpass',
-      password_confirmation: 'passpass'
-    )
+  def test_current_user_pledged_sum
+    project = create(:project)
+    user = create(:user)
+    pledge1 = create(:pledge, user: user, project: project)
+    pledge2 = create(:pledge, user: user, project: project)
+
+    assert_equal(10, project.current_user_pledged_sum(user))
+
   end
+
+
+  def test_current_user_pledges_returns_all_users_pledges
+    project = create(:project)
+    user = create(:user)
+    array = []
+    pledge1 = create(:pledge, user: user, project: project)
+    pledge2 = create(:pledge, user: user, project: project)
+    array << pledge1
+    array << pledge2
+
+    assert_equal(array, project.current_user_pledges(user))
+
+  end
+
+  def test_current_user_pledges_returns_empty_array
+    project = create(:project)
+    user = create(:user)
+    empty_array = []
+
+    assert_equal(empty_array, project.current_user_pledges(user))
+  end
+
+
+
 
 end

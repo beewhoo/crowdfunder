@@ -13,4 +13,6 @@ end
 # Regular test setup
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'pry'
 
+include FactoryBot::Syntax::Methods
