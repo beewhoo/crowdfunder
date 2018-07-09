@@ -2,6 +2,16 @@ Pledge.destroy_all
 Reward.destroy_all
 User.destroy_all
 Project.destroy_all
+Category.delete_all
+
+Category.create(name: "Art")
+Category.create(name: "Technology")
+Category.create(name: "Design")
+Category.create(name: "Games")
+Category.create(name: "Crafts")
+Category.create(name: "Music")
+Category.create(name: "Illustration")
+Category.create(name: "Food")
 
 5.times do
   User.create!(
@@ -20,7 +30,9 @@ end
               description: Faker::Lorem.paragraph,
               goal: rand(100000),
               start_date: Time.now.utc - rand(60).days,
-              end_date: Time.now.utc + rand(10).days
+              end_date: Time.now.utc + rand(10).days,
+              category: Category.all.sample
+
             )
 
   5.times do

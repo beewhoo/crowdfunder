@@ -3,8 +3,29 @@ class Project < ActiveRecord::Base
   has_many :pledges
   has_many :users, through: :pledges # backers
   belongs_to :user # project owner
+  belongs_to :category
 
   validates :title, :description, :goal, :start_date, :end_date, :user_id, presence: true
+  validates :goal, presence:true, numericality: { greater_than: 0 }
+  validate :start_date_future
+  validate :end_date_greater_start_date
+
+
+
+
+
+  def start_date_future
+     if  start_date && start_date < Date.today
+       errors.add(:start_date, "must be in future")
+     end
+   end
+
+
+   def end_date_greater_start_date
+     if  start_date &&  end_date && end_date <= start_date
+       errors.add(:end_date, "end date must be greater than start date")
+     end
+   end
 
 
   def pledge_sum

@@ -10,6 +10,11 @@
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
   </head>
+  <h1>Browse by category</h1>
+  <%@categories = Category.all%>
+  <%@categories.each do |category|%>
+  <%=link_to(category.name, category_path(category.id))%>s
+  <%end%>
 
   <body>
     <header class="site-header">

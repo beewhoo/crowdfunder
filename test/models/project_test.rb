@@ -62,6 +62,42 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
 
+  def test_project_start_date_in_the_future?
+    project = build(:project, start_date: Date.yesterday)
+    assert project.invalid?
+  end
+
+   def test_end_date_greater_start_date
+     project = build(:project, start_date: Date.today, end_date: Date.today)
+     assert project.invalid?
+   end
+
+   def test_goal_must_be_negative
+     project = build(:project, goal: -1)
+     assert project.invalid?
+   end
+   def test_goal_must_be_zero
+     project = build(:project, goal: 0)
+     assert project.invalid?
+   end
+   def test_goal_must_be_positve
+     project = build(:project, goal: 1)
+     assert project.valid?
+   end
+
+
+   def test_uniq
+     array = []
+
+  project = create(:project)
+    3.times do
+      array << project
+    end
+   assert array.uniq
+
+    end
+
+
 
 
 end
